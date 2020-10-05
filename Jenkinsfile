@@ -11,17 +11,15 @@ pipeline{
 		}
 
 		stage('Analysis'){
-		    steps{		    	
+		    steps {
 				sh 'mvn test'
-
-				junit testResults: 'target/*-reports/TEST-*.xml'
-
-				recordIssues tools: [java(), javaDoc(), 
-            		checkStyle(), spotBugs(pattern: 'target/spotbugsXml.xml')]				
-		    }		    
+			}
+			junit testResults: 'target/*-reports/TEST-*.xml'
+			recordIssues tools: [java(), javaDoc(), 
+            		checkStyle(), spotBugs(pattern: 'target/spotbugsXml.xml')]
 		}
 
-		stage ('Coverage') {        	
+		stage('Coverage'){
         	publishCoverage adapters: [jacocoAdapter('target/site/jacoco/jacoco.xml')]
     	}
 	}
