@@ -15,15 +15,16 @@ pipeline{
 		    	sh'echo "unit test"'
 				sh 'mvn test'
 
-				def checkstyle = scanForIssues tool: checkStyle(pattern: 'target/checkstyle-result.xml')
-        		publishIssues issues: [checkstyle]
+				recordIssues tools: [java(), javaDoc(), 
+            		checkStyle(), spotBugs(pattern: 'target/spotbugsXml.xml'),
+            		taskScanner(highTags:'FIXME', normalTags:'TODO', includePattern: '**/*.java', excludePattern: 'target/**/*'), ]				
 
-				def spotbugs = scanForIssues tool: spotBugs(pattern: 'target/spotbugsXml.xml')
-        		publishIssues issues: [spotbugs]
-
-				publishIssues id: 'analysis', name: 'All Issues', 
-            		issues: [checkstyle, spotbugs], 
-            		filters: [includePackage('io.jenkins.plugins.analysis.*')]				
+				step([
+					$class: 'JacocoPublisher',
+				    classPattern: 'target/classes',
+				    sourcePattern: 'src/main/java',
+				    exclusionPattern: 'src/test*'
+				])
 		    }		    
 		}		
 	}
