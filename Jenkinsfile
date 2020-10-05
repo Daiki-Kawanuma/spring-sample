@@ -14,12 +14,7 @@ pipeline{
 		    steps{
 		    	sh'echo "unit test"'
 				sh 'mvn test'
-				step([
-					$class: 'JacocoPublisher',
-				    classPattern: 'target/classes',
-				    sourcePattern: 'src/main/java',
-				    exclusionPattern: 'src/test*'
-				])
+
 				def checkstyle = scanForIssues tool: checkStyle(pattern: 'target/checkstyle-result.xml')
         		publishIssues issues: [checkstyle]
 
@@ -29,6 +24,13 @@ pipeline{
 				publishIssues id: 'analysis', name: 'All Issues', 
             		issues: [checkstyle, spotbugs], 
             		filters: [includePackage('io.jenkins.plugins.analysis.*')]
+
+				step([
+					$class: 'JacocoPublisher',
+				    classPattern: 'target/classes',
+				    sourcePattern: 'src/main/java',
+				    exclusionPattern: 'src/test*'
+				])				
 		    }		    
 		}		
 	}
