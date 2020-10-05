@@ -4,29 +4,26 @@ pipeline{
     }
 
     stages{
-        stage('compile'){
+        stage('Build'){
             steps{            
-				sh 'mvn clean compile'
+				sh 'mvn -V -e clean compile'
             }
 		}
 
-		stage('unit test'){
-		    steps{
-		    	sh'echo "unit test"'
+		stage('Analysis'){
+		    steps{		    	
 				sh 'mvn test'
 
 				junit testResults: 'target/*-reports/TEST-*.xml'
+
 				recordIssues tools: [java(), javaDoc(), 
             		checkStyle(), spotBugs(pattern: 'target/spotbugsXml.xml')]				
-
-				step([
-					$class: 'JacocoPublisher',
-				    classPattern: 'target/classes',
-				    sourcePattern: 'src/main/java',
-				    exclusionPattern: 'src/test*'
-				])
 		    }		    
-		}		
+		}
+
+		stage ('Coverage') {        	
+        	publishCoverage adapters: [jacocoAdapter('target/site/jacoco/jacoco.xml')]
+    	}
 	}
 
     post {
