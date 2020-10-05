@@ -21,20 +21,6 @@ pipeline{
 				 ] )
 
 		    }		    
-		}
-
-		stage('build and packaging'){
-			steps{
-			    sh 'mvn clean package -DskipTests'
-			    sh """
-			    mkdir -p app/target/
-			    cp target/*.war app/
-			    cp target/*.war app/target/
-			    ls app/
-			    ls app/target/
-			    """
-			}
-
 		}		
 	}
 
