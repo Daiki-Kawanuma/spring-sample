@@ -18,10 +18,6 @@ pipeline{
 			recordIssues tools: [java(), javaDoc(), 
             		checkStyle(), spotBugs(pattern: 'target/spotbugsXml.xml')]
 		}
-
-		stage('Coverage'){
-        	publishCoverage adapters: [jacocoAdapter('target/site/jacoco/jacoco.xml')]
-    	}
 	}
 
     post {
