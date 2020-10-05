@@ -56,14 +56,14 @@
                 </dependencies>
                 <executions>
                     <execution>
-                        <id>validate</id>
-                        <phase>validate</phase>
+                        <id>test</id>
+                        <phase>test</phase>
                         <configuration>
                             <configLocation>checkstyle.xml</configLocation>
                             <violationSeverity>warning</violationSeverity>
                             <encoding>UTF-8</encoding>
                             <consoleOutput>true</consoleOutput>
-                            <failsOnError>false</failsOnError>
+                            <failOnViolation>false</failOnViolation>
                             <linkXRef>false</linkXRef>
                         </configuration>
                         <goals>
