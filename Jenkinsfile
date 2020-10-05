@@ -15,9 +15,9 @@ pipeline{
 		    	sh'echo "unit test"'
 				sh 'mvn test'
 
+				junit testResults: 'target/*-reports/TEST-*.xml'
 				recordIssues tools: [java(), javaDoc(), 
-            		checkStyle(), spotBugs(pattern: 'target/spotbugsXml.xml'),
-            		taskScanner(highTags:'FIXME', normalTags:'TODO', includePattern: '**/*.java', excludePattern: 'target/**/*'), ]				
+            		checkStyle(), spotBugs(pattern: 'target/spotbugsXml.xml')]				
 
 				step([
 					$class: 'JacocoPublisher',
