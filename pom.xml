@@ -63,7 +63,7 @@
                             <violationSeverity>warning</violationSeverity>
                             <encoding>UTF-8</encoding>
                             <consoleOutput>true</consoleOutput>
-                            <failsOnError>true</failsOnError>
+                            <failsOnError>false</failsOnError>
                             <linkXRef>false</linkXRef>
                         </configuration>
                         <goals>
@@ -79,7 +79,7 @@
                 <configuration>
                     <jvmArgs>-Dfile.encoding=utf-8</jvmArgs>
                     <xmlOutput>true</xmlOutput>
-                    <failOnError>true</failOnError>
+                    <failOnError>false</failOnError>
                     <effort>Max</effort>
                     <threshold>Low</threshold>
                     <sourceEncoding>UTF-8</sourceEncoding>
