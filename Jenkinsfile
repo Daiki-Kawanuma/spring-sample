@@ -19,7 +19,9 @@ pipeline{
 		}
 
 		stage('Coverage'){
-        	publishCoverage adapters: [jacocoAdapter('target/site/jacoco/jacoco.xml')]
+			steps {
+				publishCoverage adapters: [jacocoAdapter('target/site/jacoco/jacoco.xml')]
+			}        	
     	}
 	}
 
